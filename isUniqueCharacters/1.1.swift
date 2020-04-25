@@ -1,7 +1,30 @@
 var str: String = "Hello"
 
-func isUniqueCharacters(in string: String) -> Bool {
+/*
+ Реализуйте алгоритм, определяющий, все ли символы в строке встречаются только один раз. А если при этом запрещено использование дополнительных структур данных?
+ */
+
+
+//Реализация без дополнительных структур
+func isUniqueCharacters0(in string: String) -> Bool {
+    var characterSet = Array<Bool>(repeating: false, count: 128)
+    
+    for character in string {
+        if let val = Character(extendedGraphemeClusterLiteral: character).asciiValue {
+            if characterSet[Int(val)] {
+                return false
+            }
+            characterSet[Int(val)] = true
+        }
+    }
+    return true
+}
+
+
+//Реализация со структурами данных
+func isUniqueCharacters1(in string: String) -> Bool {
     var characterSet = Dictionary<Character, Bool>()
+    
     for character in string {
         if characterSet[character] != nil {
             return false
@@ -12,6 +35,8 @@ func isUniqueCharacters(in string: String) -> Bool {
     return true
 }
 
-let result = isUniqueCharacters(in: str)
+let result0 = isUniqueCharacters0(in: str)
+let result1 = isUniqueCharacters1(in: str)
 
-print(result)
+print(result0)
+print(result1)
